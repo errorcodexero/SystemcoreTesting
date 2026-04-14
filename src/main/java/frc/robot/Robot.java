@@ -40,15 +40,17 @@ public class Robot extends LoggedRobot {
             case 1 -> "Uncommitted changes";
             default -> "Unknown";
         });
+
+        System.out.println(Constants.getMode());
         
         // Set up data receivers & replay source
         switch (Constants.getMode()) {
             case REAL:
-            // Running on a real robot, log to a USB stick ("/U/logs")
-            Logger.addDataReceiver(new WPILOGWriter());
-            Logger.addDataReceiver(new NT4Publisher());
-            
-            break;
+                // Running on a real robot, log to a USB stick ("/U/logs")
+                Logger.addDataReceiver(new WPILOGWriter());
+                Logger.addDataReceiver(new NT4Publisher());
+                
+                break;
             
             case SIM:
                 // Running a physics simulator, log to NT

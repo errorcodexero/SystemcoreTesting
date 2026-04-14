@@ -234,9 +234,8 @@ public class DriveCommands {
         },
         drive::stop
     )
-
-        // Reset PID controller when command starts
-        .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
+    // Reset PID controller when command starts
+    .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
   /**
