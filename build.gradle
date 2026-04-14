@@ -153,3 +153,5 @@ gversion {
   timeZone     = "PST"
   indent       = "    "
 }
+
+project.compileJava.dependsOn(createVersionFile)
