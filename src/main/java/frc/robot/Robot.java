@@ -11,13 +11,10 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import com.ctre.phoenix6.SignalLogger;
-
 import edu.wpi.first.net.WebServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.FieldConstants;
@@ -50,7 +47,7 @@ public class Robot extends LoggedRobot {
                 // Running on a real robot, log to a USB stick ("/U/logs")
                 Logger.addDataReceiver(new WPILOGWriter());
                 Logger.addDataReceiver(new NT4Publisher());
-                
+
                 break;
             
             case SIM:
@@ -78,7 +75,7 @@ public class Robot extends LoggedRobot {
         WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
         
         // Disable CTRE hoot files
-        SignalLogger.enableAutoLogging(false);
+        // SignalLogger.enableAutoLogging(false);
         
         // Preload tag layout
         System.out.println("Loaded " + FieldConstants.layout.getTags().size() + " tags from JSON!");
