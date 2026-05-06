@@ -13,7 +13,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      version = "2027.0.0-alpha-2";
+      version = "2027.0.0-alpha-5";
 
       wpilibJdk =
         pkgs.runCommand "wpilib-jdk"
