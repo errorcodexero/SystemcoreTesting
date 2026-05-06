@@ -160,9 +160,6 @@ public class Drive extends SubsystemBase {
         // Usage reporting for swerve template
         HAL.reportUsage("RobotDrive", "AdvantageKit");
         
-        // Start odometry thread
-        PhoenixOdometryThread.getInstance().start();
-        
         // Configure AutoBuilder for PathPlanner
         AutoBuilder.configure(
             this::getPose,

@@ -59,13 +59,8 @@ public class PhoenixOdometryThread extends Thread {
   private PhoenixOdometryThread() {
     setName("PhoenixOdometryThread");
     setDaemon(true);
-  }
 
-  @Override
-  public void start() {
-    if (timestampQueues.size() > 0) {
-      super.start();
-    }
+    start();
   }
 
   /** Registers a Phoenix signal to be read from the thread. */
