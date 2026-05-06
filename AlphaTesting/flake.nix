@@ -13,14 +13,14 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      version = "2026.2.1";
+      version = "2027.0.0-alpha-2";
 
       wpilibJdk =
         pkgs.runCommand "wpilib-jdk"
           {
             src = pkgs.fetchzip {
               url = "https://packages.wpilib.workers.dev/installer/v${version}/Linux/WPILib_Linux-${version}.tar.gz";
-              hash = "sha256-yly96Zzj0jnvudZhwE30GqvK3Ny2Tqot84ZbPS0RrFM=";
+              hash = "sha256-deHmTM7tX1TpDFVVIosKsi07fYLwZ76jVPW2JR/6jwU=";
             };
           }
           ''

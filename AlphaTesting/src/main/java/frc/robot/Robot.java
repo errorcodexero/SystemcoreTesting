@@ -11,8 +11,6 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import com.ctre.phoenix6.SignalLogger;
-
 import edu.wpi.first.net.WebServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -40,15 +38,17 @@ public class Robot extends LoggedRobot {
             case 1 -> "Uncommitted changes";
             default -> "Unknown";
         });
+
+        System.out.println(Constants.getMode());
         
         // Set up data receivers & replay source
         switch (Constants.getMode()) {
             case REAL:
-            // Running on a real robot, log to a USB stick ("/U/logs")
-            Logger.addDataReceiver(new WPILOGWriter());
-            Logger.addDataReceiver(new NT4Publisher());
-            
-            break;
+                // Running on a real robot, log to a USB stick ("/U/logs")
+                Logger.addDataReceiver(new WPILOGWriter());
+                Logger.addDataReceiver(new NT4Publisher());
+
+                break;
             
             case SIM:
                 // Running a physics simulator, log to NT
@@ -75,7 +75,7 @@ public class Robot extends LoggedRobot {
         WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
         
         // Disable CTRE hoot files
-        SignalLogger.enableAutoLogging(false);
+        // SignalLogger.enableAutoLogging(false);
         
         // Preload tag layout
         System.out.println("Loaded " + FieldConstants.layout.getTags().size() + " tags from JSON!");
@@ -85,6 +85,11 @@ public class Robot extends LoggedRobot {
     
     @Override
     public void robotPeriodic() {
+        // Runs the Scheduler. This is responsible for polling buttons, adding
+        // newly-scheduled commands, running already-scheduled commands, removing
+        // finished or interrupted commands, and running subsystem periodic() methods.
+        // This must be called from the robot's periodic block in order for anything in
+        // the Command-based framework to work.
         CommandScheduler.getInstance().run();
     }
     
