@@ -7,7 +7,11 @@
 
 package first.robot;
 
+import org.wpilib.fields.Field;
+import org.wpilib.fields.Fields;
 import org.wpilib.framework.RobotBase;
+import org.wpilib.util.Alert;
+import org.wpilib.util.Alert.Level;
 
 /**
  * This class defines the runtime mode used by AdvantageKit. The mode is always "real" when running
@@ -15,9 +19,22 @@ import org.wpilib.framework.RobotBase;
  * (log replay from a file).
  */
 public final class Constants {
-  public static final Mode simMode = Mode.SIM;
-  public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+  /** CONFIGURATION */
 
+  // Sets the currently running robot. Change to SIMBOT when running the
+  // desktop physics simulation so AdvantageKit runs in SIM mode instead of
+  // falling back to REPLAY.
+  private static final RobotType robotType = RobotType.COMPETITION;
+
+  public static class DriveConstants {
+    public static final double slowModeJoystickMultiplier = 0.4;
+  }
+
+  public static class FieldConstants {
+    public static final Field field = Fields.FRC_2026_REBUILT_WELDED.loadField();
+  }
+
+  /** ROBOT STATE */
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
@@ -27,5 +44,38 @@ public final class Constants {
 
     /** Replaying from a log file. */
     REPLAY
+  }
+
+  public static enum RobotType {
+    /** The competition bot */
+    COMPETITION,
+
+    /** The Sim Bot */
+    SIMBOT
+  }
+
+  // This is only a fallback! This will not change the robot type.
+  private static final RobotType defaultRobotType = RobotType.COMPETITION;
+
+  private static final Alert invalidRobotType =
+      new Alert(
+          "invalidRobotType",
+          "Invalid RobotType selected. Defaulting to " + defaultRobotType.toString(),
+          Level.MEDIUM);
+
+  public static RobotType getRobot() {
+    if (RobotBase.isReal() && robotType == RobotType.SIMBOT) {
+      invalidRobotType.set(true);
+      return defaultRobotType;
+    }
+
+    return robotType;
+  }
+
+  public static final Mode getMode() {
+    return switch (getRobot()) {
+      case SIMBOT -> Mode.SIM;
+      default -> RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
+    };
   }
 }
