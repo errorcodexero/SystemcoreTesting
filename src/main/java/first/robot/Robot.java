@@ -13,10 +13,14 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+import org.wpilib.command2.Command;
+import org.wpilib.command2.CommandScheduler;
 
 public class Robot extends LoggedRobot {
 
-  private RobotContainer robotContainer;
+  private Command autonomousCommand;
+
+  private final RobotContainer robotContainer;
 
   public Robot() {
     // Record metadata
@@ -61,31 +65,56 @@ public class Robot extends LoggedRobot {
     robotContainer = new RobotContainer();
   }
 
-  /** This function is called periodically during all modes. */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
-  /** This function is run once each time the robot enters autonomous mode. */
   @Override
-  public void autonomousInit() {}
+  public void disabledInit() {}
 
-  /** This function is called periodically during autonomous. */
+  @Override
+  public void disabledPeriodic() {}
+
+  @Override
+  public void disabledExit() {}
+
+  @Override
+  public void autonomousInit() {
+    autonomousCommand = robotContainer.getAutonomousCommand();
+
+    if (autonomousCommand != null) {
+      CommandScheduler.getInstance().schedule(autonomousCommand);
+    }
+  }
+
   @Override
   public void autonomousPeriodic() {}
 
-  /** This function is called once each time the robot enters teleoperated mode. */
   @Override
-  public void teleopInit() {}
+  public void autonomousExit() {}
 
-  /** This function is called periodically during teleoperated mode. */
+  @Override
+  public void teleopInit() {
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
+    }
+  }
+
   @Override
   public void teleopPeriodic() {}
 
-  /** This function is called once each time the robot enters utility mode. */
   @Override
-  public void utilityInit() {}
+  public void teleopExit() {}
 
-  /** This function is called periodically during utility mode. */
+  @Override
+  public void utilityInit() {
+    CommandScheduler.getInstance().cancelAll();
+  }
+
   @Override
   public void utilityPeriodic() {}
+
+  @Override
+  public void utilityExit() {}
 }
