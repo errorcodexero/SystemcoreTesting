@@ -58,6 +58,9 @@ public class RobotContainer {
               CompTunerConstants.kSpeedAt12Volts);
     }
 
+    DriveCommands.configure(
+        drive, () -> -gamepad_.getLeftY(), () -> -gamepad_.getLeftX(), () -> -gamepad_.getRightX());
+
     configureBindings();
     configureDriveBindings();
   }
