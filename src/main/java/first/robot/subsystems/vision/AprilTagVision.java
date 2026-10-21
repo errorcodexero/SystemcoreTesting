@@ -124,8 +124,8 @@ public class AprilTagVision extends SubsystemBase {
         }
       }
 
-      PoseEstimation est = inputs_[cam].poseEstimate;
-      poseEstimates.add(est);
+      PoseEstimation est = 
+      poseEstimates.add(inputs_[cam].poseEstimate);
 
       // Add to summaries.
       summaryTagPoses.addAll(tagPoses);

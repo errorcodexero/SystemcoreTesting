@@ -9,17 +9,17 @@ package first.robot.subsystems.vision;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
-import org.wpilib.math.geometry.Pose2d;
+
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.math.geometry.Translation2d;
-import org.wpilib.networktables.DoubleArrayEntry;
-import org.wpilib.system.Timer;
 
+import com.limelightvision.FiducialTarget;
+import com.limelightvision.LEDMode;
 import com.limelightvision.Limelight;
+import com.limelightvision.Status;
 
 public class CameraIOLimelight implements CameraIO {
 
-  protected String name_;
   protected Supplier<Rotation2d> rotationSupplier_;
 
   private final Limelight camera;
@@ -28,7 +28,6 @@ public class CameraIOLimelight implements CameraIO {
   private static int nextId = 0;
 
   public CameraIOLimelight(String name, Supplier<Rotation2d> rotationSupplier) {
-    name_ = name;
     rotationSupplier_ = rotationSupplier;
     camera = new Limelight(name);
 
@@ -39,49 +38,37 @@ public class CameraIOLimelight implements CameraIO {
   @Override
   public void updateInputs(CameraIOInputsAutoLogged inputs) {
 
-    // // Update Robot Orientation
-    // camera.setSharedRobotOrientation(
-    //    rotationSupplier_.get().getDegrees(), 0, 0, 0, 0, 0);
+    if(id_ == 0){
+      Limelight.setSharedRobotOrientation(rotationSupplier_.get().getDegrees());
+    }
 
-    // double[] rawCorners = rawCornersNT_.get(new double[] {});
-    // double[] hardwareStatus = hardwareStatusNT_.get(new double[] {-1.0, -1.0, -1.0, -1.0});
+    inputs.connected = camera.getStatus() == Status.OK;
+    inputs.name = camera.getName();
+    inputs.cpuTemp = camera.getHardwareData().cpuTempCelsius;
+    //TODO: Find way to get FPS
 
-    // // Connected if not updated in one second
-    // inputs.connected = (Timer.getFPGATimestamp() - lastUpdateSupplier_.get()) < 1;
+    inputs.simpleID = -1; //TODO: DO THIS
+    inputs.simpleArea = camera.getTargetAreaPercent();
+    inputs.simpleX = camera.getTXDegrees();
+    inputs.simpleY = camera.getTYDegrees();
+    inputs.simpleValid = camera.hasTarget();
 
-    // // Status information
-    // inputs.fps = hardwareStatus[1];
-    // inputs.cpuTemp = hardwareStatus[0];
+    ArrayList<Translation2d> corners = new ArrayList<>();
+    ArrayList<Fiducial> fiducials = new ArrayList<>();
 
-    // // Camera name
-    // inputs.name = name_;
+    var rawFiducials = camera.getLatestResults().fiducialTargets;
+    for(FiducialTarget fid : rawFiducials){
+      fiducials.add(new Fiducial(fid.fiducialId, fid.targetAreaPercent, fid.txDegrees, fid.tyDegrees));
+      
+      for(double[] corner : fid.corners){
+        corners.add(new Translation2d(corner[0], corner[1]));
+      }
+    }
 
-    // // Simple Data
-    // inputs.simpleID = (int) LimelightHelpers.getFiducialID(name_);
-    // inputs.simpleArea = LimelightHelpers.getTA(name_);
-    // inputs.simpleValid = LimelightHelpers.getTV(name_);
-    // inputs.simpleX = LimelightHelpers.getTX(name_);
-    // inputs.simpleY = LimelightHelpers.getTY(name_);
+    inputs.rawCorners = corners.toArray(new Translation2d[0]);
+    inputs.fiducials = fiducials.toArray(new Fiducial[0]);
 
-    // ArrayList<Translation2d> corners = new ArrayList<>();
-    // ArrayList<Fiducial> fiducials = new ArrayList<>();
-
-    // // Fetch Raw Corners
-    // if (rawCorners.length % 2 == 0) {
-    //   for (int i = 0; i + 1 < rawCorners.length; i += 2) {
-    //     corners.add(new Translation2d(rawCorners[i], rawCorners[i + 1]));
-    //   }
-    // }
-
-    // // Fetch Fiducials
-    // RawFiducial[] fids = LimelightHelpers.getRawFiducials(name_);
-
-    // for (RawFiducial fid : fids) {
-    //   fiducials.add(new Fiducial((int) fid.id, fid.ta, fid.txnc, fid.tync));
-    // }
-
-    // inputs.rawCorners = corners.toArray(new Translation2d[0]);
-    // inputs.fiducials = fiducials.toArray(new Fiducial[0]);
+    
 
     // PoseEstimate estimateMegatag2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(name_);
 
@@ -104,26 +91,26 @@ public class CameraIOLimelight implements CameraIO {
 
   @Override
   public String getName() {
-    return name_;
+    return camera.getName();
   }
 
   @Override
   public void forceBlink() {
-    LimelightHelpers.setLEDMode_ForceBlink(name_);
+    camera.setLEDMode(LEDMode.FORCE_BLINK);
   }
 
   @Override
   public void forceOff() {
-    LimelightHelpers.setLEDMode_ForceOff(name_);
+    camera.setLEDMode(LEDMode.FORCE_OFF);  
   }
 
   @Override
   public void forceOn() {
-    LimelightHelpers.setLEDMode_ForceOn(name_);
+    camera.setLEDMode(LEDMode.FORCE_ON);  
   }
 
   @Override
   public void resetLed() {
-    LimelightHelpers.setLEDMode_PipelineControl(name_);
+    camera.setLEDMode(LEDMode.PIPELINE_CONTROL);  
   }
 }

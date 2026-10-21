@@ -42,18 +42,17 @@ public interface CameraIO {
     public boolean connected = false;
     public String name = "";
 
-    public int simpleID = 0;
-    public double simpleX = 0.0;
-    public double simpleY = 0.0;
-    public double simpleArea = 0.0;
-    public boolean simpleValid = false;
+    public int simpleID = 0; //Tag ID
+    public double simpleX = 0.0; //Degrees to primary tag in x axis
+    public double simpleY = 0.0; //Degrees to primary tag in y axis
+    public double simpleArea = 0.0; //Amount of screen that april tag covers
+    public boolean simpleValid = false; //Is it seeing something
 
-    public Translation2d[] rawCorners = new Translation2d[] {};
+    public Translation2d[] rawCorners = {}; //Tag corners
 
-    public Fiducial[] fiducials = new Fiducial[] {};
+    public Fiducial[] fiducials = {};
 
-    public PoseEstimation poseEstimate =
-        new PoseEstimation(Pose2d.ZERO, 0, 0, 0, 0, PoseEstimationType.MEGATAG2, -1, false);
+    public PoseEstimation[] poseEstimate = {};
 
     public IMUMode imuMode = IMUMode.NONE;
     public Rotation2d imuRobotYaw = Rotation2d.ZERO;
