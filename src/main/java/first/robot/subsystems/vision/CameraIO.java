@@ -7,7 +7,7 @@
 
 package first.robot.subsystems.vision;
 
-import first.robot.subsystems.vision.CameraIOLimelight4.IMUMode;
+import com.limelightvision.IMUMode;
 import org.littletonrobotics.junction.AutoLog;
 import org.wpilib.math.geometry.Pose2d;
 import org.wpilib.math.geometry.Rotation2d;
@@ -42,19 +42,19 @@ public interface CameraIO {
     public boolean connected = false;
     public String name = "";
 
-    public int simpleID = 0; //Tag ID
-    public double simpleX = 0.0; //Degrees to primary tag in x axis
-    public double simpleY = 0.0; //Degrees to primary tag in y axis
-    public double simpleArea = 0.0; //Amount of screen that april tag covers
-    public boolean simpleValid = false; //Is it seeing something
+    public int simpleID = 0; // Tag ID
+    public double simpleX = 0.0; // Degrees to primary tag in x axis
+    public double simpleY = 0.0; // Degrees to primary tag in y axis
+    public double simpleArea = 0.0; // Amount of screen that april tag covers
+    public boolean simpleValid = false; // Is it seeing something
 
-    public Translation2d[] rawCorners = {}; //Tag corners
+    public Translation2d[] rawCorners = {}; // Tag corners
 
     public Fiducial[] fiducials = {};
 
     public PoseEstimation[] poseEstimate = {};
 
-    public IMUMode imuMode = IMUMode.NONE;
+    public IMUMode imuMode = IMUMode.EXTERNAL;
     public Rotation2d imuRobotYaw = Rotation2d.ZERO;
     public int frameSkipThrottle = 0;
 

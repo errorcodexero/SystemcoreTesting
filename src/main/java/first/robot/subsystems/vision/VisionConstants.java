@@ -7,10 +7,11 @@
 
 package first.robot.subsystems.vision;
 
-import static org.wpilib.units.Units.*;
+import static org.wpilib.units.Units.Degrees;
+import static org.wpilib.units.Units.Meters;
 
+import com.limelightvision.IMUMode;
 import first.robot.subsystems.vision.AprilTagVision.IntegrationBehavior;
-import first.robot.subsystems.vision.CameraIOLimelight4.IMUMode;
 import org.wpilib.math.geometry.Rotation3d;
 import org.wpilib.math.geometry.Transform3d;
 import org.wpilib.math.geometry.Translation3d;
@@ -52,7 +53,7 @@ public class VisionConstants {
   // LL4 Config
   public static final boolean useIMU = false; // Whether or not to use the internal IMU
   public static final IMUMode enabledIMUMode =
-      IMUMode.ASSIST_EXTERNAL; // What mode to use on the internal IMU
+      IMUMode.INTERNAL_EXTERNAL_ASSIST; // What mode to use on the internal IMU
 
   public static final boolean useRewind = true; // Whether or not to enable rewind
   public static final boolean useRewindOffField =

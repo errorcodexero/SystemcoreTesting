@@ -7,22 +7,22 @@
 
 package first.robot.subsystems.vision;
 
-import java.util.ArrayList;
-import java.util.function.Supplier;
-
-import org.wpilib.math.geometry.Rotation2d;
-import org.wpilib.math.geometry.Translation2d;
-
 import com.limelightvision.FiducialTarget;
 import com.limelightvision.LEDMode;
 import com.limelightvision.Limelight;
+import com.limelightvision.PoseEstimate;
+import com.limelightvision.PoseEstimateType;
 import com.limelightvision.Status;
+import java.util.ArrayList;
+import java.util.function.Supplier;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
 
 public class CameraIOLimelight implements CameraIO {
 
   protected Supplier<Rotation2d> rotationSupplier_;
 
-  private final Limelight camera;
+  protected final Limelight camera;
 
   private final int id_;
   private static int nextId = 0;
@@ -38,16 +38,16 @@ public class CameraIOLimelight implements CameraIO {
   @Override
   public void updateInputs(CameraIOInputsAutoLogged inputs) {
 
-    if(id_ == 0){
+    if (id_ == 0) {
       Limelight.setSharedRobotOrientation(rotationSupplier_.get().getDegrees());
     }
 
     inputs.connected = camera.getStatus() == Status.OK;
     inputs.name = camera.getName();
     inputs.cpuTemp = camera.getHardwareData().cpuTempCelsius;
-    //TODO: Find way to get FPS
+    // TODO: Find way to get FPS
 
-    inputs.simpleID = -1; //TODO: DO THIS
+    inputs.simpleID = -1; // TODO: Get the ID of simple ID or dont have this input
     inputs.simpleArea = camera.getTargetAreaPercent();
     inputs.simpleX = camera.getTXDegrees();
     inputs.simpleY = camera.getTYDegrees();
@@ -57,10 +57,11 @@ public class CameraIOLimelight implements CameraIO {
     ArrayList<Fiducial> fiducials = new ArrayList<>();
 
     var rawFiducials = camera.getLatestResults().fiducialTargets;
-    for(FiducialTarget fid : rawFiducials){
-      fiducials.add(new Fiducial(fid.fiducialId, fid.targetAreaPercent, fid.txDegrees, fid.tyDegrees));
-      
-      for(double[] corner : fid.corners){
+    for (FiducialTarget fid : rawFiducials) {
+      fiducials.add(
+          new Fiducial(fid.fiducialId, fid.targetAreaPercent, fid.txDegrees, fid.tyDegrees));
+
+      for (double[] corner : fid.corners) {
         corners.add(new Translation2d(corner[0], corner[1]));
       }
     }
@@ -68,25 +69,23 @@ public class CameraIOLimelight implements CameraIO {
     inputs.rawCorners = corners.toArray(new Translation2d[0]);
     inputs.fiducials = fiducials.toArray(new Fiducial[0]);
 
-    
+    ArrayList<PoseEstimation> estimates = new ArrayList<>();
 
-    // PoseEstimate estimateMegatag2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(name_);
+    var estimateQueue = camera.readPoseEstimateQueue(PoseEstimateType.MT2_WPIBLUE);
 
-    // if (estimateMegatag2 != null && estimateMegatag2.tagCount > 0) {
-    //   inputs.poseEstimate =
-    //       new PoseEstimation(
-    //           estimateMegatag2.pose,
-    //           estimateMegatag2.timestampSeconds,
-    //           estimateMegatag2.avgTagDist,
-    //           0.0,
-    //           estimateMegatag2.tagCount,
-    //           PoseEstimationType.MEGATAG2,
-    //           id_,
-    //           true);
-    // } else {
-    //   inputs.poseEstimate =
-    //       new PoseEstimation(Pose2d.kZero, 0, 0, 0, 0, PoseEstimationType.MEGATAG2, id_, false);
-    // }
+    // TODO: also include megatag1 for logging purposes
+    for (PoseEstimate estimate : estimateQueue) {
+      estimates.add(
+          new PoseEstimation(
+              estimate.pose,
+              estimate.timestampSeconds,
+              estimate.avgTagDistanceMeters,
+              0.0,
+              estimate.fieldedTagCount,
+              PoseEstimationType.MEGATAG2,
+              id_,
+              true));
+    }
   }
 
   @Override
@@ -101,16 +100,16 @@ public class CameraIOLimelight implements CameraIO {
 
   @Override
   public void forceOff() {
-    camera.setLEDMode(LEDMode.FORCE_OFF);  
+    camera.setLEDMode(LEDMode.FORCE_OFF);
   }
 
   @Override
   public void forceOn() {
-    camera.setLEDMode(LEDMode.FORCE_ON);  
+    camera.setLEDMode(LEDMode.FORCE_ON);
   }
 
   @Override
   public void resetLed() {
-    camera.setLEDMode(LEDMode.PIPELINE_CONTROL);  
+    camera.setLEDMode(LEDMode.PIPELINE_CONTROL);
   }
 }

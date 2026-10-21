@@ -124,15 +124,16 @@ public class AprilTagVision extends SubsystemBase {
         }
       }
 
-      PoseEstimation est = 
-      poseEstimates.add(inputs_[cam].poseEstimate);
+      // TODO: Find a better way to add estimates to the arraylist
+      for (PoseEstimation est : inputs_[cam].poseEstimate) {
+        poseEstimates.add(est);
+      }
 
       // Add to summaries.
       summaryTagPoses.addAll(tagPoses);
 
       // Log camera-specific outputs.
       Logger.recordOutput(getCameraKey(cam, "TagPoses"), tagPoses.toArray(new Pose3d[0]));
-      Logger.recordOutput(getCameraKey(cam, "BotPose"), est.pose());
     }
 
     LoggedTracer.record("Vision/GatherPoses");
@@ -154,16 +155,18 @@ public class AprilTagVision extends SubsystemBase {
 
     switch (VisionConstants.integrationBehavior) {
       case ONLY_NEAREST -> {
-        Optional<PoseEstimation> est = findMinDistanceEstimate(acceptedEstimates);
+        Optional<PoseEstimation> nearestEstimate = findMinDistanceEstimate(acceptedEstimates);
 
-        if (est.isPresent()) {
-          integratePoseEstimate(est.orElseThrow());
-          Logger.recordOutput("Vision/Summary/EstimateUsing", est.orElseThrow());
+        if (nearestEstimate.isPresent()) {
+          for (PoseEstimation est : acceptedEstimates) {
+            if (est.cameraId() == nearestEstimate.get().cameraId()) {
+              integratePoseEstimate(est);
+            }
+          }
+
+          Logger.recordOutput("Vision/Summary/CameraUsing", nearestEstimate.get().cameraId());
         } else {
-          Logger.recordOutput(
-              "Vision/Summary/EstimateUsing",
-              new PoseEstimation(
-                  new Pose2d(), 0.0, 0.0, 0.0, 0, PoseEstimationType.MEGATAG2, -1, false));
+          Logger.recordOutput("Vision/Summary/CameraUsing", -1);
         }
       }
       default -> {

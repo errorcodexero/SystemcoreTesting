@@ -10,38 +10,23 @@ package first.robot.subsystems.vision;
 import static org.wpilib.units.Units.Milliseconds;
 import static org.wpilib.units.Units.Seconds;
 
+import com.limelightvision.IMUMode;
 import java.util.function.Supplier;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.RobotModeTriggers;
 import org.wpilib.command2.button.Trigger;
-import org.wpilib.driverstation.DriverStation;
+import org.wpilib.driverstation.RobotState;
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.units.measure.Time;
 
 public class CameraIOLimelight4 extends CameraIOLimelight {
 
-  /** An enum representing the mode of the Limelight4's IMU. This is an enum for log readiblity. */
-  public static enum IMUMode {
-    NONE(0),
-    IGNORING(0),
-    SEEDING(1),
-    USING(2),
-    ASSIST_MT1(3),
-    ASSIST_EXTERNAL(4);
-
-    private final int id;
-
-    private IMUMode(int id) {
-      this.id = id;
-    }
-  }
-
   // Triggers
   private static final Trigger enabled = RobotModeTriggers.disabled().negate();
 
-  private static final Trigger fmsConnected = new Trigger(DriverStation::isFMSAttached);
+  private static final Trigger fmsConnected = new Trigger(RobotState::isFMSAttached);
 
   @AutoLogOutput private static final Trigger teleopOver = RobotModeTriggers.teleop().negate();
 
@@ -50,7 +35,8 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
       fmsConnected.or(() -> VisionConstants.useRewindOffField);
 
   // The current mode of the IMU, assuming this is not set anywhere else and IMU is enabled.
-  private IMUMode currentMode_ = VisionConstants.useIMU ? IMUMode.SEEDING : IMUMode.IGNORING;
+  private IMUMode currentMode_ =
+      VisionConstants.useIMU ? IMUMode.EXTERNAL_SEED_INTERNAL : IMUMode.EXTERNAL;
 
   // The current throttle of the LL4, assuming this is not set anywhere else and throttling is
   // enabled.
@@ -60,7 +46,7 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
   public CameraIOLimelight4(String name, Supplier<Rotation2d> rotationSupplier) {
     super(name, rotationSupplier);
 
-    LimelightHelpers.setRewindEnabled(name, VisionConstants.useRewind);
+    camera.setRewindEnabled(VisionConstants.useRewind);
 
     bindIMUCommands();
     bindThrottleCommands();
@@ -71,11 +57,11 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
   public void updateInputs(CameraIOInputsAutoLogged inputs) {
     super.updateInputs(inputs);
 
-    LimelightHelpers.SetIMUMode(name_, currentMode_.id); // Set IMU Mode
-    LimelightHelpers.setLimelightNTDouble(name_, "throttle_set", currentThrottle_); // Set Throttle
+    camera.setIMUMode(currentMode_);
+    camera.setThrottle(currentThrottle_);
 
     inputs.imuMode = currentMode_;
-    inputs.imuRobotYaw = Rotation2d.fromDegrees(LimelightHelpers.getIMUData(name_).robotYaw);
+    inputs.imuRobotYaw = Rotation2d.fromDegrees(camera.getIMUData().yawDegrees);
     inputs.frameSkipThrottle = currentThrottle_;
   }
 
@@ -97,7 +83,7 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
             .beforeStarting(Commands.waitTime(Milliseconds.of(100))));
 
     // When disabled, use gryo to reset IMU.
-    enabled.onFalse(setModeCommand(IMUMode.SEEDING));
+    enabled.onFalse(setModeCommand(IMUMode.EXTERNAL_SEED_INTERNAL));
   }
 
   private void bindRewindCommands() {
@@ -130,7 +116,6 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
   }
 
   private Command saveRewind(Time duration) {
-    return Commands.runOnce(
-        () -> LimelightHelpers.triggerRewindCapture(name_, duration.in(Seconds)));
+    return Commands.runOnce(() -> camera.triggerRewindCapture(duration.in(Seconds)));
   }
 }
