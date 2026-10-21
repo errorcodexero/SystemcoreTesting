@@ -61,7 +61,7 @@ public interface CameraIO {
 
     public Fiducial[] fiducials = {};
 
-    public PoseEstimation[] poseEstimate = {};
+    public PoseEstimation[] poseEstimates = {};
 
     public IMUMode imuMode = IMUMode.EXTERNAL;
     public Rotation2d imuRobotYaw = Rotation2d.ZERO;
