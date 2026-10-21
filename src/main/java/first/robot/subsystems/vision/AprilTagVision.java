@@ -15,6 +15,7 @@ import first.robot.subsystems.vision.CameraIO.PoseEstimation;
 import first.robot.subsystems.vision.CameraIO.PoseEstimationType;
 import first.robot.util.LoggedTracer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
@@ -29,7 +30,7 @@ import org.wpilib.util.Alert.Level;
 
 public class AprilTagVision extends SubsystemBase {
 
-  static final Distance kDefaultDistanceFilter = Meters.of(100.0);
+  static final Distance DEFAULT_DISTANCE_FILTER = Meters.of(100.0);
 
   public static enum IntegrationBehavior {
     ONLY_NEAREST,
@@ -45,7 +46,7 @@ public class AprilTagVision extends SubsystemBase {
 
   private boolean enabled_; // Whether or not vision pose estimation is enabled
 
-  private Distance maxTagDistance = kDefaultDistanceFilter;
+  private Distance maxTagDistance = DEFAULT_DISTANCE_FILTER;
 
   public AprilTagVision(PoseEstimateConsumer poseEstimateConsumer, CameraIO... io) {
     poseEstimateConsumer_ = poseEstimateConsumer;
@@ -70,7 +71,7 @@ public class AprilTagVision extends SubsystemBase {
   }
 
   public void setTagFilterDistance(Distance d) {
-    maxTagDistance = (d == null) ? kDefaultDistanceFilter : d;
+    maxTagDistance = (d == null) ? DEFAULT_DISTANCE_FILTER : d;
   }
 
   /**
@@ -115,6 +116,7 @@ public class AprilTagVision extends SubsystemBase {
       // Skip this camera if it is not connected.
       if (!inputs_[cam].connected) continue;
 
+      // Get tag poses and collect them
       ArrayList<Pose3d> tagPoses = new ArrayList<>();
 
       for (Fiducial fid : inputs_[cam].fiducials) {
@@ -124,9 +126,8 @@ public class AprilTagVision extends SubsystemBase {
         }
       }
 
-      for (PoseEstimation est : inputs_[cam].poseEstimates) {
-        poseEstimates.add(est);
-      }
+      // Add all the pose estimates to the collection
+      Collections.addAll(poseEstimates, inputs_[cam].poseEstimates);
 
       // Add to summaries.
       summaryTagPoses.addAll(tagPoses);
