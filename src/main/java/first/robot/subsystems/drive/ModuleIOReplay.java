@@ -1,4 +1,4 @@
-// Copyright (c) 2026 FRC 1425 Error Code Xero 
+// Copyright (c) 2026 FRC 1425 Error Code Xero
 // http://github.com/errorcodexero
 //
 // Use of this source code is governed by an MIT-style

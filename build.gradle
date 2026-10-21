@@ -166,7 +166,7 @@ task(eventDeploy) {
 }
 createVersionFile.dependsOn(eventDeploy)
 
-def teamHeader = '// Copyright (c) 2026 FRC 1425 Error Code Xero \n// http://github.com/errorcodexero\n//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file at\n// the root directory of this project.\n\n'
+def teamHeader = '// Copyright (c) 2026 FRC 1425 Error Code Xero\n// http://github.com/errorcodexero\n//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file at\n// the root directory of this project.\n\n'
 def excludeOtherHeaders = '(?s)\\A(?!// Copyright \\(c\\) (?:[0-9-]+ Littleton Robotics)).*'
 
 // Spotless formatting

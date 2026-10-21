@@ -1,4 +1,4 @@
-// Copyright (c) 2026 FRC 1425 Error Code Xero 
+// Copyright (c) 2026 FRC 1425 Error Code Xero
 // http://github.com/errorcodexero
 //
 // Use of this source code is governed by an MIT-style
@@ -7,9 +7,14 @@
 
 package first.robot.subsystems.vision;
 
+import static org.wpilib.units.Units.Hertz;
+import static org.wpilib.units.Units.Microseconds;
+import static org.wpilib.units.Units.Seconds;
+
 import com.limelightvision.FiducialTarget;
 import com.limelightvision.LEDMode;
 import com.limelightvision.Limelight;
+import com.limelightvision.LimelightResults;
 import com.limelightvision.PoseEstimate;
 import com.limelightvision.PoseEstimateType;
 import com.limelightvision.Status;
@@ -17,14 +22,15 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.units.measure.Frequency;
+import org.wpilib.units.measure.Time;
 
 public class CameraIOLimelight implements CameraIO {
 
-  protected Supplier<Rotation2d> rotationSupplier_;
-
   protected final Limelight camera;
-
+  protected final Supplier<Rotation2d> rotationSupplier_;
   private final int id_;
+
   private static int nextId = 0;
 
   public CameraIOLimelight(String name, Supplier<Rotation2d> rotationSupplier) {
@@ -38,6 +44,7 @@ public class CameraIOLimelight implements CameraIO {
   @Override
   public void updateInputs(CameraIOInputsAutoLogged inputs) {
 
+    // Set robot orientation only once per robot loop.
     if (id_ == 0) {
       Limelight.setSharedRobotOrientation(rotationSupplier_.get().getDegrees());
     }
@@ -45,7 +52,7 @@ public class CameraIOLimelight implements CameraIO {
     inputs.connected = camera.getStatus() == Status.OK;
     inputs.name = camera.getName();
     inputs.cpuTemp = camera.getHardwareData().cpuTempCelsius;
-    // TODO: Find way to get FPS
+    inputs.fps = calculateFPS().in(Hertz);
 
     inputs.simpleID = -1; // TODO: Get the ID of simple ID or dont have this input
     inputs.simpleArea = camera.getTargetAreaPercent();
@@ -86,6 +93,45 @@ public class CameraIOLimelight implements CameraIO {
               id_,
               true));
     }
+  }
+
+  // Variables for FPS Calculations
+  private long lastFrameIndex = 0;
+  private Time lastFrameTimestamp = Seconds.zero();
+  private Frequency lastFPS = Hertz.zero();
+
+  /**
+   * Calculate the average FPS since the last call of this method.
+   *
+   * @return
+   */
+  private Frequency calculateFPS() {
+    LimelightResults results = camera.getLatestResults();
+
+    long newFrameIndex = results.frameIndex;
+    Time newTimestamp = Microseconds.of(results.timestampMicros);
+
+    // First call, or the camera's counter reset: just resync.
+    if (lastFrameIndex < 0 || newFrameIndex < lastFrameIndex) {
+      lastFrameIndex = newFrameIndex;
+      lastFrameTimestamp = newTimestamp;
+      return lastFPS;
+    }
+
+    long framesPassed = results.frameIndex - lastFrameIndex;
+    Time timePassed = newTimestamp.minus(lastFrameTimestamp);
+    Time timePerFrame = timePassed.div(framesPassed);
+
+    // No new frame (or no time elapsed): keep the last known value.
+    if (framesPassed == 0 || timePassed.lte(Seconds.zero())) {
+      return lastFPS;
+    }
+
+    lastFPS = timePerFrame.asFrequency();
+    lastFrameIndex = newFrameIndex;
+    lastFrameTimestamp = newTimestamp;
+
+    return lastFPS;
   }
 
   @Override
