@@ -7,8 +7,11 @@
 
 package first.robot.subsystems.vision;
 
+import static org.wpilib.units.Units.Celsius;
+import static org.wpilib.units.Units.Degrees;
 import static org.wpilib.units.Units.Hertz;
 import static org.wpilib.units.Units.Microseconds;
+import static org.wpilib.units.Units.Percent;
 import static org.wpilib.units.Units.Seconds;
 
 import com.limelightvision.FiducialTarget;
@@ -51,13 +54,13 @@ public class CameraIOLimelight implements CameraIO {
 
     inputs.connected = camera.getStatus() == Status.OK;
     inputs.name = camera.getName();
-    inputs.cpuTemp = camera.getHardwareData().cpuTempCelsius;
-    inputs.fps = calculateFPS().in(Hertz);
+    inputs.cpuTemp = Celsius.of(camera.getHardwareData().cpuTempCelsius);
+    inputs.fps = calculateFPS();
 
     inputs.simpleID = -1; // TODO: Get the ID of simple ID or dont have this input
-    inputs.simpleArea = camera.getTargetAreaPercent();
-    inputs.simpleX = camera.getTXDegrees();
-    inputs.simpleY = camera.getTYDegrees();
+    inputs.simpleArea = Percent.of(camera.getTargetAreaPercent());
+    inputs.simpleX = Degrees.of(camera.getTXDegrees());
+    inputs.simpleY = Degrees.of(camera.getTYDegrees());
     inputs.simpleValid = camera.hasTarget();
 
     ArrayList<Translation2d> corners = new ArrayList<>();

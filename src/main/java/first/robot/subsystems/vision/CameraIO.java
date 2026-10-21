@@ -7,11 +7,20 @@
 
 package first.robot.subsystems.vision;
 
+import static org.wpilib.units.Units.Celsius;
+import static org.wpilib.units.Units.Degrees;
+import static org.wpilib.units.Units.Hertz;
+import static org.wpilib.units.Units.Percent;
+
 import com.limelightvision.IMUMode;
 import org.littletonrobotics.junction.AutoLog;
 import org.wpilib.math.geometry.Pose2d;
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.units.measure.Angle;
+import org.wpilib.units.measure.Dimensionless;
+import org.wpilib.units.measure.Frequency;
+import org.wpilib.units.measure.Temperature;
 
 /** An interface encapsulating a single camera in a vision system. */
 public interface CameraIO {
@@ -43,9 +52,9 @@ public interface CameraIO {
     public String name = "";
 
     public int simpleID = 0; // Tag ID
-    public double simpleX = 0.0; // Degrees to primary tag in x axis
-    public double simpleY = 0.0; // Degrees to primary tag in y axis
-    public double simpleArea = 0.0; // Amount of screen that april tag covers
+    public Angle simpleX = Degrees.zero(); // Degrees to primary tag in x axis
+    public Angle simpleY = Degrees.zero(); // Degrees to primary tag in y axis
+    public Dimensionless simpleArea = Percent.zero(); // Amount of screen that april tag covers
     public boolean simpleValid = false; // Is it seeing something
 
     public Translation2d[] rawCorners = {}; // Tag corners
@@ -58,8 +67,8 @@ public interface CameraIO {
     public Rotation2d imuRobotYaw = Rotation2d.ZERO;
     public int frameSkipThrottle = 0;
 
-    public double cpuTemp = -1.0;
-    public double fps = -1.0;
+    public Temperature cpuTemp = Celsius.zero();
+    public Frequency fps = Hertz.zero();
   }
 
   /**
