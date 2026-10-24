@@ -7,7 +7,9 @@
 
 package first.robot;
 
-import static org.wpilib.units.Units.*;
+import static org.wpilib.units.Units.FeetPerSecond;
+import static org.wpilib.units.Units.MetersPerSecond;
+import static org.wpilib.units.Units.RadiansPerSecond;
 
 import first.generated.CompTunerConstants;
 import first.robot.Constants.DriveConstants;
@@ -17,7 +19,6 @@ import first.robot.subsystems.drive.GyroIO;
 import first.robot.subsystems.drive.GyroIOPigeon2;
 import first.robot.subsystems.drive.ModuleIOReplay;
 import first.robot.subsystems.drive.ModuleIOTalonFX;
-import first.robot.subsystems.vision.AprilTagVision;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
