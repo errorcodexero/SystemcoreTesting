@@ -17,7 +17,6 @@ import first.robot.subsystems.drive.GyroIO;
 import first.robot.subsystems.drive.GyroIOPigeon2;
 import first.robot.subsystems.drive.ModuleIOReplay;
 import first.robot.subsystems.drive.ModuleIOTalonFX;
-import first.robot.subsystems.vision.AprilTagVision;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
@@ -44,8 +43,16 @@ public class RobotContainer {
                 CompTunerConstants.kSpeedAt12Volts);
         break;
       case SIMBOT:
-        break;
-      default:
+        drive =
+            new Drive(
+                new GyroIO() {},
+                ModuleIOReplay::new,
+                CompTunerConstants.FrontLeft,
+                CompTunerConstants.FrontRight,
+                CompTunerConstants.BackLeft,
+                CompTunerConstants.BackRight,
+                CompTunerConstants.kCANBus,
+                CompTunerConstants.kSpeedAt12Volts);
         break;
     }
 
