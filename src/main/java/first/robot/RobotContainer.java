@@ -7,8 +7,12 @@
 
 package first.robot;
 
-import static org.wpilib.units.Units.*;
+import static org.wpilib.units.Units.FeetPerSecond;
+import static org.wpilib.units.Units.MetersPerSecond;
+import static org.wpilib.units.Units.RadiansPerSecond;
+import static org.wpilib.units.Units.Volts;
 
+import com.ctre.phoenix6.CANBus;
 import first.generated.CompTunerConstants;
 import first.robot.Constants.DriveConstants;
 import first.robot.commands.drive.DriveCommands;
@@ -17,13 +21,22 @@ import first.robot.subsystems.drive.GyroIO;
 import first.robot.subsystems.drive.GyroIOPigeon2;
 import first.robot.subsystems.drive.ModuleIOReplay;
 import first.robot.subsystems.drive.ModuleIOTalonFX;
+import first.robot.subsystems.motor.Motor;
+import first.robot.subsystems.motor.MotorIO;
+import first.robot.subsystems.motor.MotorIOHardware;
+import first.robot.subsystems.vision.AprilTagVision;
+import first.robot.subsystems.vision.CameraIO;
+import first.robot.subsystems.vision.CameraIOLimelight;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
+import org.wpilib.hardware.bus.CANPort;
 
 public class RobotContainer {
 
   private Drive drive;
+  private AprilTagVision vision;
+  private Motor motor;
 
   private final CommandXboxController gamepad = new CommandXboxController(0);
 
@@ -41,6 +54,13 @@ public class RobotContainer {
                 CompTunerConstants.BackRight,
                 CompTunerConstants.kCANBus,
                 CompTunerConstants.kSpeedAt12Volts);
+
+        motor = new Motor(new MotorIOHardware(4, new CANBus(CANPort.CAN_S4)));
+
+        vision =
+            new AprilTagVision(
+                drive::addVisionMeasurement,
+                new CameraIOLimelight("limelight", drive::getRotation));
         break;
       case SIMBOT:
         drive =
@@ -69,6 +89,14 @@ public class RobotContainer {
               CompTunerConstants.kSpeedAt12Volts);
     }
 
+    if (motor == null) {
+      motor = new Motor(new MotorIO() {});
+    }
+
+    if (vision == null) {
+      vision = new AprilTagVision(drive::addVisionMeasurement, new CameraIO() {});
+    }
+
     DriveCommands.configure(
         drive, () -> -gamepad.getLeftY(), () -> -gamepad.getLeftX(), () -> -gamepad.getRightX());
 
@@ -77,7 +105,9 @@ public class RobotContainer {
   }
 
   // Bind robot actions to commands here.
-  private void configureBindings() {}
+  private void configureBindings() {
+    gamepad.rightTrigger().and(gamepad.leftTrigger()).whileTrue(motor.runVoltage(Volts.of(6.0)));
+  }
 
   private void configureDriveBindings() {
     // Default command, normal field-relative drive
