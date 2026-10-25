@@ -67,5 +67,8 @@
   },
   "[java]": {
     "editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"
-  }
+  },
+  "java.diagnostic.filter": [
+    "**build/generated**"
+  ]
 }
