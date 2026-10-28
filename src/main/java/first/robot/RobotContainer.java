@@ -16,6 +16,9 @@ import com.ctre.phoenix6.CANBus;
 import first.generated.CompTunerConstants;
 import first.robot.Constants.DriveConstants;
 import first.robot.commands.drive.DriveCommands;
+import first.robot.subsystems.colorsensor.ColorSensor;
+import first.robot.subsystems.colorsensor.ColorSensorIO;
+import first.robot.subsystems.colorsensor.ColorSensorIORev;
 import first.robot.subsystems.drive.Drive;
 import first.robot.subsystems.drive.GyroIO;
 import first.robot.subsystems.drive.GyroIOPigeon2;
@@ -31,12 +34,14 @@ import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
 import org.wpilib.hardware.bus.CANPort;
+import org.wpilib.hardware.bus.I2C;
 
 public class RobotContainer {
 
   private Drive drive;
   private AprilTagVision vision;
   private Motor motor;
+  private ColorSensor colorSensor;
 
   private final CommandXboxController gamepad = new CommandXboxController(0);
 
@@ -56,6 +61,8 @@ public class RobotContainer {
                 CompTunerConstants.kSpeedAt12Volts);
 
         motor = new Motor(new MotorIOHardware(4, new CANBus(CANPort.CAN_S4)));
+
+        colorSensor = new ColorSensor(new ColorSensorIORev(I2C.Port.PORT_1));
 
         vision =
             new AprilTagVision(
@@ -91,6 +98,10 @@ public class RobotContainer {
 
     if (motor == null) {
       motor = new Motor(new MotorIO() {});
+    }
+
+    if (colorSensor == null) {
+      colorSensor = new ColorSensor(new ColorSensorIO() {});
     }
 
     if (vision == null) {
