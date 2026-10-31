@@ -27,8 +27,8 @@ public interface ColorSensorIO {
   }
 
   // Gets the inputs from the color sensor on port 1
-  public default void updateColorInputs1(ColorInputs inputs, ColorSensorV3 colorSensor) {}
+  public default void updateColorInputsPort1(ColorInputs inputs, ColorSensorV3 colorSensor) {}
 
   // Gets the inputs from the color sensor on port 0
-  public default void updateColorInputs0(ColorInputs inputs, ColorSensorV3 colorSensor) {}
+  public default void updateColorInputsPort0(ColorInputs inputs, ColorSensorV3 colorSensor) {}
 }

@@ -27,22 +27,20 @@ public class ColorSensorIOHardware implements ColorSensorIO {
   private boolean isConnected0 = false;
 
   public ColorSensorIOHardware() {
-    final ColorSensorV3 hardwareColorSensorPort1 = new ColorSensorV3(I2C.Port.PORT_1);
-    final ColorSensorV3 hardwareColorSensorPort0 = new ColorSensorV3(I2C.Port.PORT_0);
 
-    detectedColor1 = hardwareColorSensorPort1.getColor();
-    proximity1 = hardwareColorSensorPort1.getProximity();
-    IR1 = hardwareColorSensorPort1.getIR();
-    isConnected1 = hardwareColorSensorPort1.isConnected();
+    detectedColor1 = new Color();
+    proximity1 = 0;
+    IR1 = 0;
+    isConnected1 = false;
 
-    detectedColor0 = hardwareColorSensorPort0.getColor();
-    proximity0 = hardwareColorSensorPort0.getProximity();
-    IR0 = hardwareColorSensorPort0.getIR();
-    isConnected0 = hardwareColorSensorPort0.isConnected();
+    detectedColor0 = new Color();
+    proximity0 = 0;
+    IR0 = 0;
+    isConnected0 = false;
   }
 
   @Override
-  public void updateColorInputs1(ColorInputs inputs, ColorSensorV3 colorSensor) {
+  public void updateColorInputsPort1(ColorInputs inputs, ColorSensorV3 colorSensor) {
     inputs.IR1 = colorSensor.getIR();
     inputs.detectedColor1 = colorSensor.getColor();
     inputs.proximity1 = colorSensor.getProximity();
@@ -50,7 +48,7 @@ public class ColorSensorIOHardware implements ColorSensorIO {
   }
 
   @Override
-  public void updateColorInputs0(ColorInputs inputs, ColorSensorV3 colorSensor) {
+  public void updateColorInputsPort0(ColorInputs inputs, ColorSensorV3 colorSensor) {
     inputs.IR0 = colorSensor.getIR();
     inputs.detectedColor0 = colorSensor.getColor();
     inputs.proximity0 = colorSensor.getProximity();

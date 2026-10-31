@@ -30,6 +30,6 @@ public class ColorSensor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        io.updateColorInputs1(inputs, ColorSensorPort1);
+        io.updateColorInputsPort1(inputs, ColorSensorPort1);
 }
 }
