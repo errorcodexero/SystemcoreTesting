@@ -6,8 +6,6 @@
 // the root directory of this project.
 
 package first.robot.subsystems.colorSensor;
-
-import com.revrobotics.ColorSensorV3;
 import org.littletonrobotics.junction.AutoLog;
 import org.wpilib.util.Color;
 
@@ -27,8 +25,8 @@ public interface ColorSensorIO {
   }
 
   // Gets the inputs from the color sensor on port 1
-  public default void updateColorInputsPort1(ColorInputs inputs, ColorSensorV3 colorSensor) {}
+  public default void updateColorInputsPort1(ColorInputs inputs) {}
 
   // Gets the inputs from the color sensor on port 0
-  public default void updateColorInputsPort0(ColorInputs inputs, ColorSensorV3 colorSensor) {}
+  public default void updateColorInputsPort0(ColorInputs inputs) {}
 }

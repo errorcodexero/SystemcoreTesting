@@ -16,11 +16,9 @@ import first.robot.subsystems.motor.MotorInputsAutoLogged;
 
 @SuppressWarnings("unused")
 public class ColorSensor extends SubsystemBase {
-    final ColorSensorV3 ColorSensorPort1 = new ColorSensorV3(I2C.Port.PORT_1);
 
     private final ColorSensorIO io;
     private ColorSensorIO.ColorInputs inputs = new ColorSensorIO.ColorInputs();
-    
 
     public ColorSensor(ColorSensorIO io) {
         this.io = io;
@@ -30,6 +28,6 @@ public class ColorSensor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        io.updateColorInputsPort1(inputs, ColorSensorPort1);
+        io.updateColorInputsPort1(inputs);
 }
 }
