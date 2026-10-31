@@ -14,34 +14,36 @@ import org.wpilib.util.Color;
 @SuppressWarnings("unused")
 public class ColorSensorIOHardware implements ColorSensorIO {
 
-  // port 1
+  // port 1 inputs
   private Color detectedColor1 = new Color();
   private int proximity1 = 0;
   private double IR1 = 0;
   private boolean isConnected1 = false;
 
-  // port 2
+  // port 2 inputs
   private Color detectedColor0 = new Color();
   private int proximity0 = 0;
   private double IR0 = 0;
   private boolean isConnected0 = false;
 
+  //both colorsensor object
   ColorSensorV3 ColorSensorPort1 = new ColorSensorV3(I2C.Port.PORT_1);
   ColorSensorV3 ColorSensorPort0 = new ColorSensorV3(I2C.Port.PORT_0);
 
+  //hardware object constructor
   public ColorSensorIOHardware() {
 
-    detectedColor1 = new Color();
+    detectedColor1 = Color.BLACK;
     proximity1 = 0;
     IR1 = 0;
     isConnected1 = false;
 
-    detectedColor0 = new Color();
+    detectedColor0 = Color.BLACK;
     proximity0 = 0;
     IR0 = 0;
     isConnected0 = false;
   }
-
+//update inputs for port 1
   @Override
   public void updateColorInputsPort1(ColorInputs inputs) {
     inputs.IR1 = ColorSensorPort1.getIR();
@@ -50,6 +52,7 @@ public class ColorSensorIOHardware implements ColorSensorIO {
     inputs.isConnected1 = ColorSensorPort1.isConnected();
   }
 
+  //update inputs for port 2
   @Override
   public void updateColorInputsPort0(ColorInputs inputs) {
     inputs.IR0 = ColorSensorPort0.getIR();

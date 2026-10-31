@@ -14,11 +14,13 @@ public interface ColorSensorIO {
 
   @AutoLog
   public static class ColorInputs {
+    //port 1 inputs
     public Color detectedColor1 = Color.BLACK;
     public int proximity1 = 0;
     public double IR1 = 0;
     public boolean isConnected1 = false;
 
+    //port 2 inputs
     public Color detectedColor0 = Color.BLACK;
     public int proximity0 = 0;
     public double IR0 = 0;

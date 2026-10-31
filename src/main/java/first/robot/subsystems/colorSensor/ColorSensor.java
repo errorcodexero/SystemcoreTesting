@@ -22,6 +22,7 @@ public class ColorSensor extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // get and log inputs
     io.updateColorInputsPort1(loggedInputs);
     Logger.processInputs("ColorSensorInputs", loggedInputs);
   }
