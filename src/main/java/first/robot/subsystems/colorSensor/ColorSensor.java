@@ -7,27 +7,22 @@
 
 package first.robot.subsystems.colorSensor;
 
+import org.littletonrobotics.junction.Logger;
 import org.wpilib.command2.SubsystemBase;
-import org.wpilib.hardware.bus.I2C;
 
-import com.revrobotics.ColorSensorV3;
-
-import first.robot.subsystems.motor.MotorInputsAutoLogged;
-
-@SuppressWarnings("unused")
 public class ColorSensor extends SubsystemBase {
 
-    private final ColorSensorIO io;
-    private ColorSensorIO.ColorInputs inputs = new ColorSensorIO.ColorInputs();
+  private final ColorInputsAutoLogged loggedInputs = new ColorInputsAutoLogged();
 
-    public ColorSensor(ColorSensorIO io) {
-        this.io = io;
-    }
+  private final ColorSensorIO io;
 
+  public ColorSensor(ColorSensorIO io) {
+    this.io = io;
+  }
 
-
-    @Override
-    public void periodic() {
-        io.updateColorInputsPort1(inputs);
-}
+  @Override
+  public void periodic() {
+    io.updateColorInputsPort1(loggedInputs);
+    Logger.processInputs("ColorSensorInputs", loggedInputs);
+  }
 }

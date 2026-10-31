@@ -6,6 +6,7 @@
 // the root directory of this project.
 
 package first.robot.subsystems.colorSensor;
+
 import org.littletonrobotics.junction.AutoLog;
 import org.wpilib.util.Color;
 
@@ -13,12 +14,12 @@ public interface ColorSensorIO {
 
   @AutoLog
   public static class ColorInputs {
-    public Color detectedColor1 = new Color();
+    public Color detectedColor1 = Color.BLACK;
     public int proximity1 = 0;
     public double IR1 = 0;
     public boolean isConnected1 = false;
 
-    public Color detectedColor0 = new Color();
+    public Color detectedColor0 = Color.BLACK;
     public int proximity0 = 0;
     public double IR0 = 0;
     public boolean isConnected0 = false;
