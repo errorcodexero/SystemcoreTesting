@@ -5,7 +5,7 @@
 // license that can be found in the LICENSE file at
 // the root directory of this project.
 
-package first.robot.subsystems.i2c;
+package first.robot.subsystems.i2Csensor;
 
 import com.revrobotics.ColorSensorV3;
 import org.wpilib.hardware.bus.I2C.Port;
