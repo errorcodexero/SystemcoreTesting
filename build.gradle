@@ -1,7 +1,7 @@
 plugins {
     id "java"
     id "application"
-    id "org.wpilib.GradleRIO" version "2027.0.0-alpha-7"
+    id "org.wpilib.GradleRIO" version "2027.0.0-alpha-8"
     id "com.peterabeles.gversion" version "1.10"
     id "com.diffplug.spotless" version "8.6.0"
 }
@@ -58,7 +58,7 @@ wpi.java.runSimWithDebugJni = false
 def includeDesktopSupport = true
 
 // Configuration for AdvantageKit
-task(replayWatch, type: JavaExec) {
+tasks.register("replayWatch", JavaExec) {
     mainClass = "org.littletonrobotics.junction.ReplayWatch"
     classpath = sourceSets.main.runtimeClasspath
 }
@@ -133,22 +133,24 @@ gversion {
     indent       = "  "
 }
 
+def projectDirectory = projectDir
+def isDeployTaskIncluded = project.gradle.startParameter.taskNames.any({it.toLowerCase().contains("deploy")})
+
 // Create commit with working changes on event branches
-task(eventDeploy) {
+tasks.register("eventDeploy") {
     doLast {
-        if (project.gradle.startParameter.taskNames.any({ it.toLowerCase().contains("deploy") })) {
+        if (isDeployTaskIncluded) {
             def branchPrefix = "event"
             def branch = 'git branch --show-current'.execute().text.trim()
             def commitMessage = "Update at '${new Date().toString()}'"
-
             if (branch.startsWith(branchPrefix)) {
-                exec {
-                    workingDir(projectDir)
+                execOperations.exec {
+                    workingDir(projectDirectory)
                     executable 'git'
                     args 'add', '-A'
                 }
-                exec {
-                    workingDir(projectDir)
+                execOperations.exec {
+                    workingDir(projectDirectory)
                     executable 'git'
                     args 'commit', '-m', commitMessage
                     ignoreExitValue = true
