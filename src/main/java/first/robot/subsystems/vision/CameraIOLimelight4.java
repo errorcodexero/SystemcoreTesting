@@ -43,14 +43,18 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
   private int currentThrottle_ =
       VisionConstants.regulateThrottle ? VisionConstants.numSkippedFramesDisabled : 0;
 
-  public CameraIOLimelight4(String name, Supplier<Rotation2d> rotationSupplier) {
-    super(name, rotationSupplier);
+  public CameraIOLimelight4(String name, Supplier<Rotation2d> rotationSupplier, String configPath) {
+    super(name, rotationSupplier, configPath);
 
     camera.setRewindEnabled(VisionConstants.useRewind);
 
     bindIMUCommands();
     bindThrottleCommands();
     bindRewindCommands();
+  }
+
+  public CameraIOLimelight4(String name, Supplier<Rotation2d> rotationSupplier) {
+    this(name, rotationSupplier, null);
   }
 
   @Override

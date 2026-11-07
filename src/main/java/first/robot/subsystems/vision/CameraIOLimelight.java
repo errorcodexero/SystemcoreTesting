@@ -18,6 +18,7 @@ import com.limelightvision.FiducialTarget;
 import com.limelightvision.LEDMode;
 import com.limelightvision.Limelight;
 import com.limelightvision.LimelightResults;
+import com.limelightvision.PipelineConfiguration;
 import com.limelightvision.PoseEstimate;
 import com.limelightvision.PoseEstimateType;
 import com.limelightvision.Status;
@@ -36,12 +37,32 @@ public class CameraIOLimelight implements CameraIO {
 
   private static int nextId = 0;
 
-  public CameraIOLimelight(String name, Supplier<Rotation2d> rotationSupplier) {
+  /**
+   * Creates an implementation of a limelight
+   *
+   * @param name The name of the limelight to connect to
+   * @param rotationSupplier The rotation for Megatag2
+   * @param configPath Path relative to deploy/limelight/ of the VPR config file to use.
+   */
+  public CameraIOLimelight(String name, Supplier<Rotation2d> rotationSupplier, String configPath) {
     rotationSupplier_ = rotationSupplier;
     camera = new Limelight(name);
 
     id_ = nextId;
     nextId++;
+
+    if (configPath != null) {
+      camera.setPipelineConfigurationOverride(
+          PipelineConfiguration.fromDeployFolder("limelight/" + configPath));
+
+      camera.setUsePipelineConfigurationOverride(true);
+    } else {
+      System.out.println("No config path present for limelight: " + name);
+    }
+  }
+
+  public CameraIOLimelight(String name, Supplier<Rotation2d> rotationSupplier) {
+    this(name, rotationSupplier, null);
   }
 
   @Override
