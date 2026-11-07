@@ -8,6 +8,7 @@
 package first.robot;
 
 import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedPowerDistribution;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -15,6 +16,8 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.CommandScheduler;
+import org.wpilib.hardware.bus.CANPort;
+import org.wpilib.hardware.power.PowerDistribution.ModuleType;
 
 public class Robot extends LoggedRobot {
 
@@ -43,6 +46,8 @@ public class Robot extends LoggedRobot {
         // Running on a real robot
         Logger.addDataReceiver(new WPILOGWriter());
         Logger.addDataReceiver(new NT4Publisher());
+
+        LoggedPowerDistribution.getInstance(CANPort.CAN_S0, 1, ModuleType.REV);
         break;
 
       case SIM:
