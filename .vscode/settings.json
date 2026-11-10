@@ -70,5 +70,9 @@
   },
   "java.diagnostic.filter": [
     "**build/generated**"
-  ]
+  ],
+  "files.associations": {
+    "*.json": "json",
+    "*.gradle": "groovy"
+  }
 }
