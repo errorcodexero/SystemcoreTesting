@@ -21,6 +21,9 @@ import first.robot.subsystems.drive.GyroIO;
 import first.robot.subsystems.drive.GyroIOPigeon2;
 import first.robot.subsystems.drive.ModuleIOReplay;
 import first.robot.subsystems.drive.ModuleIOTalonFX;
+import first.robot.subsystems.i2Csensor.I2Csensor;
+import first.robot.subsystems.i2Csensor.I2CsensorIO;
+import first.robot.subsystems.i2Csensor.I2csensorIOHardware;
 import first.robot.subsystems.motor.Motor;
 import first.robot.subsystems.motor.MotorIO;
 import first.robot.subsystems.motor.MotorIOHardware;
@@ -31,12 +34,14 @@ import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
 import org.wpilib.hardware.bus.CANPort;
+import org.wpilib.hardware.bus.I2C;
 
 public class RobotContainer {
 
   private Drive drive;
   private AprilTagVision vision;
   private Motor motor;
+  private I2Csensor sensor;
 
   private final CommandXboxController gamepad = new CommandXboxController(0);
 
@@ -56,6 +61,8 @@ public class RobotContainer {
                 CompTunerConstants.kSpeedAt12Volts);
 
         motor = new Motor(new MotorIOHardware(4, new CANBus(CANPort.CAN_S4)));
+
+        sensor = new I2Csensor(new I2csensorIOHardware(I2C.Port.PORT_1));
 
         vision =
             new AprilTagVision(
@@ -91,6 +98,10 @@ public class RobotContainer {
 
     if (motor == null) {
       motor = new Motor(new MotorIO() {});
+    }
+
+    if (sensor == null) {
+      sensor = new I2Csensor(new I2CsensorIO() {});
     }
 
     if (vision == null) {

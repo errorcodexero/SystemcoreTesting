@@ -1,0 +1,391 @@
+[
+  {
+    "messageType": 2,
+    "line": "\u001b[1m\u001b[36m=== WPILib RioLog Started ===\u001b[0m\n\u001b[32mWaiting for robot connection...\u001b[0m\n\u001b[33mTIPS:\u001b[0m\n• \u001b[0mUse \u001b[1mSet\u001b[0m button to change team number\n• \u001b[0mClick on errors/warnings to expand details\n• \u001b[0mUse search box to filter messages\n• \u001b[0mToggle auto-scrolling for viewing older logs\n• \u001b[0mSave logs to file for later analysis",
+    "timestamp": 1794366714.887,
+    "seqNumber": 0
+  },
+  {
+    "line": "\u001b[32mRobot connection established\u001b[0m",
+    "messageType": 2,
+    "seqNumber": 0,
+    "timestamp": 1794366714.912
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2108.26513671875,
+    "seqNumber": 132,
+    "line": "[AdvantageKit] Waiting for USB drive to mount before opening log at \"/U/logs\"..."
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2108.3154296875,
+    "seqNumber": 133,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): Watchdog not fed within 0.080000s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2108.3154296875,
+    "seqNumber": 134,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): Loop time of 0.02s overrun"
+  },
+  {
+    "timestamp": 2108.31103515625,
+    "seqNumber": 59,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "Watchdog not fed within 0.080000s\n",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "timestamp": 2108.311279296875,
+    "seqNumber": 60,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "Loop time of 0.02s overrun\n",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "line": "\u001b[32mRobot connection established\u001b[0m",
+    "messageType": 2,
+    "seqNumber": 0,
+    "timestamp": 1794366714.918
+  },
+  {
+    "timestamp": 2108.56005859375,
+    "seqNumber": 61,
+    "numOccur": 0,
+    "errorCode": 0,
+    "flags": 0,
+    "details": "[phoenix] CAN bus Connected: can_s1",
+    "location": "",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "timestamp": 2108.56005859375,
+    "seqNumber": 62,
+    "numOccur": 0,
+    "errorCode": 0,
+    "flags": 0,
+    "details": "[phoenix] CAN bus Network Up: can_s1",
+    "location": "",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2108.717529296875,
+    "seqNumber": 135,
+    "line": "NT: Got a NT4 connection from 10.14.25.11 port 36270"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2108.717529296875,
+    "seqNumber": 136,
+    "line": "NT: CONNECTED NT4 client 'limelight@1' (from 10.14.25.11:36270)"
+  },
+  {
+    "timestamp": 2109.152099609375,
+    "seqNumber": 63,
+    "numOccur": 0,
+    "errorCode": -10024,
+    "flags": 1,
+    "details": "Using a Pro only feature on an unlicensed device. The device may not behave as expected if it continues to operate while unlicensed.",
+    "location": "Talon FX 11 (\"can_s1\") Apply Configs",
+    "callStack": "\tat com.ctre.phoenix6.configs.ParentConfigurator.setConfigsPrivate(ParentConfigurator.java:125)\n\tat com.ctre.phoenix6.configs.TalonFXConfigurator.apply(TalonFXConfigurator.java:61)\n\tat first.robot.subsystems.drive.ModuleIOTalonFX.lambda$new$2(ModuleIOTalonFX.java:143)\n\tat first.robot.util.PhoenixUtil.tryUntilOk(PhoenixUtil.java:17)\n\tat first.robot.subsystems.drive.ModuleIOTalonFX.<init>(ModuleIOTalonFX.java:143)\n\tat first.robot.subsystems.drive.Drive.<init>(Drive.java:125)\n\tat first.robot.RobotContainer.<init>(RobotContainer.java:51)\n\tat first.robot.Robot.<init>(Robot.java:65)\n\tat org.wpilib.framework.RobotBase.runRobot(RobotBase.java:469)\n\tat org.wpilib.framework.RobotBase.startRobot(RobotBase.java:589)\n\tat first.Main.main(Main.java:26)\n",
+    "messageType": 0
+  },
+  {
+    "timestamp": 2109.443115234375,
+    "seqNumber": 64,
+    "numOccur": 0,
+    "errorCode": -10024,
+    "flags": 1,
+    "details": "Using a Pro only feature on an unlicensed device. The device may not behave as expected if it continues to operate while unlicensed.",
+    "location": "Talon FX 21 (\"can_s1\") Apply Configs",
+    "callStack": "\tat com.ctre.phoenix6.configs.ParentConfigurator.setConfigsPrivate(ParentConfigurator.java:125)\n\tat com.ctre.phoenix6.configs.TalonFXConfigurator.apply(TalonFXConfigurator.java:61)\n\tat first.robot.subsystems.drive.ModuleIOTalonFX.lambda$new$2(ModuleIOTalonFX.java:143)\n\tat first.robot.util.PhoenixUtil.tryUntilOk(PhoenixUtil.java:17)\n\tat first.robot.subsystems.drive.ModuleIOTalonFX.<init>(ModuleIOTalonFX.java:143)\n\tat first.robot.subsystems.drive.Drive.<init>(Drive.java:126)\n\tat first.robot.RobotContainer.<init>(RobotContainer.java:51)\n\tat first.robot.Robot.<init>(Robot.java:65)\n\tat org.wpilib.framework.RobotBase.runRobot(RobotBase.java:469)\n\tat org.wpilib.framework.RobotBase.startRobot(RobotBase.java:589)\n\tat first.Main.main(Main.java:26)\n",
+    "messageType": 0
+  },
+  {
+    "timestamp": 2110.140869140625,
+    "seqNumber": 65,
+    "numOccur": 0,
+    "errorCode": -1003,
+    "flags": 1,
+    "details": "CAN frame not received/too-stale. Check the CAN bus wiring, CAN bus utilization, and power to the device.",
+    "location": "Talon FX 4 (\"can_s4\") Status Signal Position",
+    "callStack": "\tat com.ctre.phoenix6.BaseStatusSignal.refreshValue(BaseStatusSignal.java:725)\n\tat com.ctre.phoenix6.StatusSignal.refresh(StatusSignal.java:115)\n\tat com.ctre.phoenix6.hardware.ParentDevice.commonLookup(ParentDevice.java:647)\n\tat com.ctre.phoenix6.hardware.ParentDevice.lookupStatusSignal(ParentDevice.java:659)\n\tat com.ctre.phoenix6.hardware.core.CoreTalonFX.getPosition(CoreTalonFX.java:1394)\n\tat com.ctre.phoenix6.hardware.core.CoreTalonFX.getPosition(CoreTalonFX.java:1362)\n\tat first.robot.subsystems.motor.MotorIOHardware.<init>(MotorIOHardware.java:36)\n\tat first.robot.RobotContainer.<init>(RobotContainer.java:63)\n\tat first.robot.Robot.<init>(Robot.java:65)\n\tat org.wpilib.framework.RobotBase.runRobot(RobotBase.java:469)\n\tat org.wpilib.framework.RobotBase.startRobot(RobotBase.java:589)\n\tat first.Main.main(Main.java:26)\n",
+    "messageType": 0
+  },
+  {
+    "timestamp": 2110.141357421875,
+    "seqNumber": 66,
+    "numOccur": 0,
+    "errorCode": -1003,
+    "flags": 1,
+    "details": "CAN frame not received/too-stale. Check the CAN bus wiring, CAN bus utilization, and power to the device.",
+    "location": "Talon FX 4 (\"can_s4\") Status Signal Velocity",
+    "callStack": "\tat com.ctre.phoenix6.BaseStatusSignal.refreshValue(BaseStatusSignal.java:725)\n\tat com.ctre.phoenix6.StatusSignal.refresh(StatusSignal.java:115)\n\tat com.ctre.phoenix6.hardware.ParentDevice.commonLookup(ParentDevice.java:647)\n\tat com.ctre.phoenix6.hardware.ParentDevice.lookupStatusSignal(ParentDevice.java:659)\n\tat com.ctre.phoenix6.hardware.core.CoreTalonFX.getVelocity(CoreTalonFX.java:1332)\n\tat com.ctre.phoenix6.hardware.core.CoreTalonFX.getVelocity(CoreTalonFX.java:1301)\n\tat first.robot.subsystems.motor.MotorIOHardware.<init>(MotorIOHardware.java:37)\n\tat first.robot.RobotContainer.<init>(RobotContainer.java:63)\n\tat first.robot.Robot.<init>(Robot.java:65)\n\tat org.wpilib.framework.RobotBase.runRobot(RobotBase.java:469)\n\tat org.wpilib.framework.RobotBase.startRobot(RobotBase.java:589)\n\tat first.Main.main(Main.java:26)\n",
+    "messageType": 0
+  },
+  {
+    "timestamp": 2110.144287109375,
+    "seqNumber": 67,
+    "numOccur": 0,
+    "errorCode": -1003,
+    "flags": 1,
+    "details": "CAN frame not received/too-stale. Check the CAN bus wiring, CAN bus utilization, and power to the device.",
+    "location": "Talon FX 4 (\"can_s4\") Status Signal MotorVoltage",
+    "callStack": "\tat com.ctre.phoenix6.BaseStatusSignal.refreshValue(BaseStatusSignal.java:725)\n\tat com.ctre.phoenix6.StatusSignal.refresh(StatusSignal.java:115)\n\tat com.ctre.phoenix6.hardware.ParentDevice.commonLookup(ParentDevice.java:647)\n\tat com.ctre.phoenix6.hardware.ParentDevice.lookupStatusSignal(ParentDevice.java:659)\n\tat com.ctre.phoenix6.hardware.core.CoreTalonFX.getMotorVoltage(CoreTalonFX.java:574)\n\tat com.ctre.phoenix6.hardware.core.CoreTalonFX.getMotorVoltage(CoreTalonFX.java:545)\n\tat first.robot.subsystems.motor.MotorIOHardware.<init>(MotorIOHardware.java:38)\n\tat first.robot.RobotContainer.<init>(RobotContainer.java:63)\n\tat first.robot.Robot.<init>(Robot.java:65)\n\tat org.wpilib.framework.RobotBase.runRobot(RobotBase.java:469)\n\tat org.wpilib.framework.RobotBase.startRobot(RobotBase.java:589)\n\tat first.Main.main(Main.java:26)\n",
+    "messageType": 0
+  },
+  {
+    "timestamp": 2110.1650390625,
+    "seqNumber": 68,
+    "numOccur": 0,
+    "errorCode": 0,
+    "flags": 0,
+    "details": "[phoenix] CAN bus Connected: can_s4",
+    "location": "",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "timestamp": 2110.1650390625,
+    "seqNumber": 69,
+    "numOccur": 0,
+    "errorCode": 0,
+    "flags": 0,
+    "details": "[phoenix] CAN bus Network Up: can_s4",
+    "location": "",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2110.521484375,
+    "seqNumber": 137,
+    "line": "********** Robot program startup complete **********"
+  },
+  {
+    "timestamp": 2110.5322265625,
+    "seqNumber": 70,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "Watchdog not fed within 0.020000s\n",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2110.571533203125,
+    "seqNumber": 138,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): Watchdog not fed within 0.020000s"
+  },
+  {
+    "timestamp": 2110.59130859375,
+    "seqNumber": 71,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "Watchdog not fed within 0.080000s\n",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "timestamp": 2110.591552734375,
+    "seqNumber": 72,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "Loop time of 0.02s overrun\n",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2110.62158203125,
+    "seqNumber": 139,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): Watchdog not fed within 0.080000s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2110.62158203125,
+    "seqNumber": 140,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): Loop time of 0.02s overrun"
+  },
+  {
+    "timestamp": 2111.203369140625,
+    "seqNumber": 73,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "\tDrive.periodic(): 0.643414s\n\tMotor.periodic(): 0.001636s\n\tI2Csensor.periodic(): 0.003255s\n\tbuttons.run(): 0.001011s\n\tAprilTagVision.periodic(): 0.040473s\n",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "timestamp": 2111.204833984375,
+    "seqNumber": 74,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "\tdisabledInit(): 0.000490s\n\trobotPeriodic(): 0.691893s\n\tdisabledPeriodic(): 0.000192s\n\tTunableRegistry.update(): 0.000109s\n",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 141,
+    "line": "CommandScheduler loop overrun"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 142,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): \tDrive.periodic(): 0.643414s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 143,
+    "line": "\tMotor.periodic(): 0.001636s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 144,
+    "line": "\tI2Csensor.periodic(): 0.003255s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 145,
+    "line": "\tbuttons.run(): 0.001011s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 146,
+    "line": "\tAprilTagVision.periodic(): 0.040473s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 147,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): \tdisabledInit(): 0.000490s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 148,
+    "line": "\trobotPeriodic(): 0.691893s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 149,
+    "line": "\tdisabledPeriodic(): 0.000192s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.22314453125,
+    "seqNumber": 150,
+    "line": "\tTunableRegistry.update(): 0.000109s"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2111.2734375,
+    "seqNumber": 151,
+    "line": "CommandScheduler loop overrun"
+  },
+  {
+    "timestamp": 2111.462646484375,
+    "seqNumber": 75,
+    "numOccur": 0,
+    "errorCode": 0,
+    "flags": 0,
+    "details": "[phoenix] Library initialization is complete.",
+    "location": "",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "timestamp": 2113.541259765625,
+    "seqNumber": 76,
+    "numOccur": 0,
+    "errorCode": 0,
+    "flags": 0,
+    "details": "[phoenix-diagnostics] Server 2026.70.0 (Sep 18 2026, 00:15:58) running on port: 1250",
+    "location": "",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "timestamp": 2123.4326171875,
+    "seqNumber": 77,
+    "numOccur": 0,
+    "errorCode": 1,
+    "flags": 0,
+    "details": "[AdvantageKit] Timed out waiting for USB drive at \"/U/logs\", no data will be saved.",
+    "location": "org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40)",
+    "callStack": "",
+    "messageType": 1
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2123.44921875,
+    "seqNumber": 152,
+    "line": "Warning at org.wpilib.driverstation.DriverStationErrors.reportWarning(DriverStationErrors.java:40): [AdvantageKit] Timed out waiting for USB drive at \"/U/logs\", no data will be saved."
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2154.809326171875,
+    "seqNumber": 153,
+    "line": "NT: Got a NT4 connection from 10.14.25.203 port 54619"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2154.809326171875,
+    "seqNumber": 154,
+    "line": "NT: Got a NT4 connection from 10.14.25.203 port 54620"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2154.859375,
+    "seqNumber": 155,
+    "line": "NT: CONNECTED NT4 client 'AdvantageScopeLite@2' (from 10.14.25.203:54620)"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2154.90966796875,
+    "seqNumber": 156,
+    "line": "NT: Got a NT4 connection from 10.14.25.203 port 54621"
+  },
+  {
+    "messageType": 2,
+    "timestamp": 2154.90966796875,
+    "seqNumber": 157,
+    "line": "NT: CONNECTED RTT client (from 10.14.25.203:54621)"
+  },
+  {
+    "line": "\u001b[31mRobot connection lost\u001b[0m",
+    "messageType": 2,
+    "seqNumber": 0,
+    "timestamp": 1794366870.698
+  }
+]

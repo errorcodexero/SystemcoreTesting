@@ -10,10 +10,10 @@ package first.robot.subsystems.i2Csensor;
 import com.revrobotics.ColorSensorV3;
 import org.wpilib.hardware.bus.I2C.Port;
 
-public class I2csensorhardware implements I2CsensorIO {
+public class I2csensorIOHardware implements I2CsensorIO {
   private final ColorSensorV3 sensor;
 
-  public I2csensorhardware(Port port) {
+  public I2csensorIOHardware(Port port) {
     sensor = new ColorSensorV3(port);
   }
 
