@@ -47,7 +47,7 @@ public class Robot extends LoggedRobot {
         Logger.addDataReceiver(new WPILOGWriter());
         Logger.addDataReceiver(new NT4Publisher());
 
-        LoggedPowerDistribution.getInstance(CANPort.CAN_S0, 1, ModuleType.REV);
+        LoggedPowerDistribution.getInstance(CANPort.CAN_S0.value, 1, ModuleType.REV);
         break;
 
       case SIM:

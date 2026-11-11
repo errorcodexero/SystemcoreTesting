@@ -14,6 +14,14 @@ import static org.wpilib.units.Units.Microseconds;
 import static org.wpilib.units.Units.Percent;
 import static org.wpilib.units.Units.Seconds;
 
+import java.util.ArrayList;
+import java.util.function.Supplier;
+
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.units.measure.Frequency;
+import org.wpilib.units.measure.Time;
+
 import com.limelightvision.FiducialTarget;
 import com.limelightvision.LEDMode;
 import com.limelightvision.Limelight;
@@ -22,12 +30,6 @@ import com.limelightvision.PipelineConfiguration;
 import com.limelightvision.PoseEstimate;
 import com.limelightvision.PoseEstimateType;
 import com.limelightvision.Status;
-import java.util.ArrayList;
-import java.util.function.Supplier;
-import org.wpilib.math.geometry.Rotation2d;
-import org.wpilib.math.geometry.Translation2d;
-import org.wpilib.units.measure.Frequency;
-import org.wpilib.units.measure.Time;
 
 public class CameraIOLimelight implements CameraIO {
 
