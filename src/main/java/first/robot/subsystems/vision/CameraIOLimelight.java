@@ -14,14 +14,6 @@ import static org.wpilib.units.Units.Microseconds;
 import static org.wpilib.units.Units.Percent;
 import static org.wpilib.units.Units.Seconds;
 
-import java.util.ArrayList;
-import java.util.function.Supplier;
-
-import org.wpilib.math.geometry.Rotation2d;
-import org.wpilib.math.geometry.Translation2d;
-import org.wpilib.units.measure.Frequency;
-import org.wpilib.units.measure.Time;
-
 import com.limelightvision.FiducialTarget;
 import com.limelightvision.LEDMode;
 import com.limelightvision.Limelight;
@@ -30,6 +22,14 @@ import com.limelightvision.PipelineConfiguration;
 import com.limelightvision.PoseEstimate;
 import com.limelightvision.PoseEstimateType;
 import com.limelightvision.Status;
+import java.util.ArrayList;
+import java.util.function.Supplier;
+import org.littletonrobotics.junction.Logger;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.units.measure.Frequency;
+import org.wpilib.units.measure.Time;
 
 public class CameraIOLimelight implements CameraIO {
 
@@ -46,9 +46,10 @@ public class CameraIOLimelight implements CameraIO {
    * @param rotationSupplier The rotation for Megatag2
    * @param configPath Path relative to deploy/limelight/ of the VPR config file to use.
    */
-  public CameraIOLimelight(String name, Supplier<Rotation2d> rotationSupplier, String configPath) {
+  public CameraIOLimelight(
+      String name, Supplier<Rotation2d> rotationSupplier, String configPath, Pose3d cameraPose) {
     rotationSupplier_ = rotationSupplier;
-    camera = new Limelight(name);
+    camera = new Limelight(name, cameraPose);
 
     id_ = nextId;
     nextId++;
@@ -64,7 +65,7 @@ public class CameraIOLimelight implements CameraIO {
   }
 
   public CameraIOLimelight(String name, Supplier<Rotation2d> rotationSupplier) {
-    this(name, rotationSupplier, null);
+    this(name, rotationSupplier, null, null);
   }
 
   @Override
@@ -104,10 +105,13 @@ public class CameraIOLimelight implements CameraIO {
 
     ArrayList<PoseEstimation> estimates = new ArrayList<>();
 
-    var estimateQueue = camera.readPoseEstimateQueue(PoseEstimateType.MT2_WPIBLUE);
+    PoseEstimate[] estimateQueue = camera.readPoseEstimateQueue(PoseEstimateType.MT2_WPIBLUE);
+
+    Logger.recordOutput("CameraIOLimelight/PoseEstimateCount", estimateQueue.length);
 
     // TODO: also include megatag1 for logging purposes
     for (PoseEstimate estimate : estimateQueue) {
+
       estimates.add(
           new PoseEstimation(
               estimate.pose,
@@ -115,10 +119,12 @@ public class CameraIOLimelight implements CameraIO {
               estimate.avgTagDistanceMeters,
               0.0,
               estimate.fieldedTagCount,
-              PoseEstimationType.MEGATAG2,
+              estimate.isMT2() ? PoseEstimationType.MEGATAG2 : PoseEstimationType.MEGATAG1,
               id_,
-              true));
+              estimate.isValid()));
     }
+
+    inputs.poseEstimates = estimates.toArray(new PoseEstimation[0]);
   }
 
   // Variables for FPS Calculations

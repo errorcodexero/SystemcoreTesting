@@ -7,13 +7,14 @@
 
 package first.robot;
 
+import static org.wpilib.units.Units.Degrees;
 import static org.wpilib.units.Units.FeetPerSecond;
+import static org.wpilib.units.Units.Inches;
 import static org.wpilib.units.Units.MetersPerSecond;
 import static org.wpilib.units.Units.RadiansPerSecond;
 import static org.wpilib.units.Units.Volts;
 
 import com.ctre.phoenix6.CANBus;
-import com.limelightvision.Limelight;
 import first.generated.CompTunerConstants;
 import first.robot.Constants.DriveConstants;
 import first.robot.commands.drive.DriveCommands;
@@ -30,13 +31,14 @@ import first.robot.subsystems.motor.MotorIO;
 import first.robot.subsystems.motor.MotorIOHardware;
 import first.robot.subsystems.vision.AprilTagVision;
 import first.robot.subsystems.vision.CameraIO;
-import first.robot.subsystems.vision.CameraIOLimelight;
 import first.robot.subsystems.vision.CameraIOLimelight4;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
 import org.wpilib.hardware.bus.CANPort;
 import org.wpilib.hardware.bus.I2C;
+import org.wpilib.math.geometry.Pose3d;
+import org.wpilib.math.geometry.Rotation3d;
 
 public class RobotContainer {
 
@@ -69,8 +71,15 @@ public class RobotContainer {
         vision =
             new AprilTagVision(
                 drive::addVisionMeasurement,
-                new CameraIOLimelight4("limelight", drive::getRotation, "highexpo"),
-                new CameraIOLimelight(Limelight.SYSTEMCORE_USB1, drive::getRotation, "lowexpo"));
+                new CameraIOLimelight4(
+                    "limelight",
+                    drive::getRotation,
+                    "highexpo",
+                    new Pose3d(
+                        Inches.of(12),
+                        Inches.of(2.25),
+                        Inches.of(7),
+                        new Rotation3d(Degrees.zero(), Degrees.of(-40), Degrees.zero()))));
         break;
       case SIMBOT:
         drive =

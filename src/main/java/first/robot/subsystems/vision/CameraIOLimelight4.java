@@ -18,6 +18,7 @@ import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.RobotModeTriggers;
 import org.wpilib.command2.button.Trigger;
 import org.wpilib.driverstation.RobotState;
+import org.wpilib.math.geometry.Pose3d;
 import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.units.measure.Time;
 
@@ -43,8 +44,9 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
   private int currentThrottle_ =
       VisionConstants.regulateThrottle ? VisionConstants.numSkippedFramesDisabled : 0;
 
-  public CameraIOLimelight4(String name, Supplier<Rotation2d> rotationSupplier, String configPath) {
-    super(name, rotationSupplier, configPath);
+  public CameraIOLimelight4(
+      String name, Supplier<Rotation2d> rotationSupplier, String configPath, Pose3d cameraPose) {
+    super(name, rotationSupplier, configPath, cameraPose);
 
     camera.setRewindEnabled(VisionConstants.useRewind);
 
@@ -54,7 +56,7 @@ public class CameraIOLimelight4 extends CameraIOLimelight {
   }
 
   public CameraIOLimelight4(String name, Supplier<Rotation2d> rotationSupplier) {
-    this(name, rotationSupplier, null);
+    this(name, rotationSupplier, null, null);
   }
 
   @Override
