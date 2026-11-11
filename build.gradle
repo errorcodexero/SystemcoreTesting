@@ -191,7 +191,7 @@ spotless {
     java {
         target fileTree(".") {
             include "**/*.java"
-            exclude "**/build/**", "**/build-*/**"
+            exclude "**/build/**", "**/build-*/**", "/.direnv"
         }
         toggleOffOn()
         googleJavaFormat()
@@ -203,7 +203,7 @@ spotless {
     groovyGradle {
         target fileTree(".") {
             include "**/*.gradle"
-            exclude "**/build/**", "**/build-*/**"
+            exclude "**/build/**", "**/build-*/**", "/.direnv"
         }
         greclipse('4.31')
         leadingTabsToSpaces(4)
@@ -213,14 +213,14 @@ spotless {
     json {
         target fileTree(".") {
             include "**/*.json"
-            exclude "**/build/**", "**/build-*/**", ".wpilib/**"
+            exclude "**/build/**", "**/build-*/**", ".wpilib/**", "/.direnv"
         }
         gson().indentWithSpaces(2)
     }
     format "misc", {
         target fileTree(".") {
             include "**/*.md", "**/.gitignore"
-            exclude "**/build/**", "**/build-*/**"
+            exclude "**/build/**", "**/build-*/**", "/.direnv"
         }
         trimTrailingWhitespace()
         leadingTabsToSpaces(2)

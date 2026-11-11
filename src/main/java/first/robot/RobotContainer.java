@@ -13,6 +13,7 @@ import static org.wpilib.units.Units.RadiansPerSecond;
 import static org.wpilib.units.Units.Volts;
 
 import com.ctre.phoenix6.CANBus;
+import com.limelightvision.Limelight;
 import first.generated.CompTunerConstants;
 import first.robot.Constants.DriveConstants;
 import first.robot.commands.drive.DriveCommands;
@@ -30,6 +31,7 @@ import first.robot.subsystems.motor.MotorIOHardware;
 import first.robot.subsystems.vision.AprilTagVision;
 import first.robot.subsystems.vision.CameraIO;
 import first.robot.subsystems.vision.CameraIOLimelight;
+import first.robot.subsystems.vision.CameraIOLimelight4;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
@@ -67,7 +69,8 @@ public class RobotContainer {
         vision =
             new AprilTagVision(
                 drive::addVisionMeasurement,
-                new CameraIOLimelight("limelight", drive::getRotation));
+                new CameraIOLimelight4("limelight", drive::getRotation, "highexpo"),
+                new CameraIOLimelight(Limelight.SYSTEMCORE_USB1, drive::getRotation, "lowexpo"));
         break;
       case SIMBOT:
         drive =
