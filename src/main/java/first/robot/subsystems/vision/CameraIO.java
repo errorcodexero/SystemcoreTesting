@@ -40,10 +40,8 @@ public interface CameraIO {
       PoseEstimationType type,
       int cameraId,
       boolean valid) {}
-  ;
 
   public static record Fiducial(int id, double area, double x, double y) {}
-  ;
 
   @AutoLog
   public static class CameraIOInputs {
@@ -77,7 +75,6 @@ public interface CameraIO {
    * @param inputs The inputs to update
    */
   public default void updateInputs(CameraIOInputsAutoLogged inputs) {}
-  ;
 
   /**
    * Gets a human-readable name of the camera. Mostly for alerts.
@@ -91,17 +88,13 @@ public interface CameraIO {
 
   /** Forces the indicator light on the limelight to be off. */
   public default void forceOff() {}
-  ;
 
   /** Forces the indicator light on the limelight to blink. */
   public default void forceBlink() {}
-  ;
 
   /** Forces the indicator light on the limelight to be on. */
   public default void forceOn() {}
-  ;
 
   /** Resets the indicator light on the limelight to be controlled by its own software/pipelines. */
   public default void resetLed() {}
-  ;
 }

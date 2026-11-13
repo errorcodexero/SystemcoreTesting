@@ -186,16 +186,13 @@ public class Drive extends SubsystemBase {
 
     Pathfinding.setPathfinder(new LocalADStarAK());
 
-    PathPlannerLogging.setLogActivePathCallback(
-        (activePath) -> {
-          Logger.recordOutput(
-              "Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
-        });
+    PathPlannerLogging.setLogActivePathCallback(activePath -> {
+      Logger.recordOutput("Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
+    });
 
-    PathPlannerLogging.setLogTargetPoseCallback(
-        (targetPose) -> {
-          Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
-        });
+    PathPlannerLogging.setLogTargetPoseCallback(targetPose -> {
+      Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
+    });
 
     // Configure SysId
     sysId =
@@ -204,9 +201,9 @@ public class Drive extends SubsystemBase {
                 null,
                 null,
                 null,
-                (state) -> Logger.recordOutput("Drive/SysIdState", state.toString())),
+                state -> Logger.recordOutput("Drive/SysIdState", state.toString())),
             new SysIdRoutine.Mechanism(
-                (voltage) -> runCharacterization(voltage.in(Volts)), null, this));
+                voltage -> runCharacterization(voltage.in(Volts)), null, this));
   }
 
   @Override
