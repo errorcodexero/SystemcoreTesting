@@ -42,7 +42,7 @@ public class CompTunerConstants {
   // When using closed-loop control, the drive motor uses the control
   // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
   private static final Slot0Configs driveGains =
-      new Slot0Configs().withKP(0.2).withKI(0).withKD(0).withKS(0).withKV(0.124);
+      new Slot0Configs().withKP(0.2).withKI(0).withKD(0).withKS(0.17067).withKV(0.79072);
 
   // The closed-loop output type to use for the steer motors;
   // This affects the PID/FF gains for the steer motors
@@ -96,7 +96,7 @@ public class CompTunerConstants {
   // Measured robot speed (m/s) at 12 V applied output;
   // This is NOT the desired max robot speed - see MaxSpeed in RobotContainer instead;
   // This needs to be tuned to your individual robot
-  public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(4.35);
+  public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(4.325);
 
   // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;
   // This may need to be tuned to your individual robot
@@ -104,7 +104,7 @@ public class CompTunerConstants {
 
   private static final double kDriveGearRatio = 6.746031746031747;
   private static final double kSteerGearRatio = 21.428571428571427;
-  private static final Distance kWheelRadius = Inches.of(1.9);
+  private static final Distance kWheelRadius = Inches.of(1.931);
 
   private static final boolean kInvertLeftSide = false;
   private static final boolean kInvertRightSide = true;

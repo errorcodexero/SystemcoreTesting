@@ -35,6 +35,7 @@ import first.robot.subsystems.vision.CameraIOLimelight4;
 import org.wpilib.command2.Command;
 import org.wpilib.command2.Commands;
 import org.wpilib.command2.button.CommandXboxController;
+import org.wpilib.command2.button.RobotModeTriggers;
 import org.wpilib.hardware.bus.CANPort;
 import org.wpilib.hardware.bus.I2C;
 import org.wpilib.math.geometry.Pose3d;
@@ -130,6 +131,13 @@ public class RobotContainer {
   // Bind robot actions to commands here.
   private void configureBindings() {
     gamepad.rightTrigger().and(gamepad.leftTrigger()).whileTrue(motor.runVoltage(Volts.of(6.0)));
+
+    RobotModeTriggers.utility()
+        .and(gamepad.menu())
+        .toggleOnTrue(DriveCommands.wheelRadiusCharacterization(drive));
+    RobotModeTriggers.utility()
+        .and(gamepad.view())
+        .toggleOnTrue(DriveCommands.feedforwardCharacterization(drive));
   }
 
   private void configureDriveBindings() {
