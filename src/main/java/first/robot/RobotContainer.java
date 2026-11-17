@@ -17,6 +17,7 @@ import static org.wpilib.units.Units.Volts;
 import com.ctre.phoenix6.CANBus;
 import first.generated.CompTunerConstants;
 import first.robot.Constants.DriveConstants;
+import first.robot.Constants.Mode;
 import first.robot.commands.drive.DriveCommands;
 import first.robot.subsystems.colorsensor.ColorSensor;
 import first.robot.subsystems.colorsensor.ColorSensorIO;
@@ -51,49 +52,51 @@ public class RobotContainer {
   private final CommandXboxController gamepad = new CommandXboxController(0);
 
   public RobotContainer() {
-    switch (Constants.getRobot()) {
-      case COMPETITION:
-        drive =
-            new Drive(
-                new GyroIOPigeon2(
-                    CompTunerConstants.DrivetrainConstants.Pigeon2Id, CompTunerConstants.kCANBus),
-                ModuleIOTalonFX::new,
-                CompTunerConstants.FrontLeft,
-                CompTunerConstants.FrontRight,
-                CompTunerConstants.BackLeft,
-                CompTunerConstants.BackRight,
-                CompTunerConstants.kCANBus,
-                CompTunerConstants.kSpeedAt12Volts);
+    if (Constants.getMode() != Mode.REPLAY) {
+      switch (Constants.getRobot()) {
+        case COMPETITION:
+          drive =
+              new Drive(
+                  new GyroIOPigeon2(
+                      CompTunerConstants.DrivetrainConstants.Pigeon2Id, CompTunerConstants.kCANBus),
+                  ModuleIOTalonFX::new,
+                  CompTunerConstants.FrontLeft,
+                  CompTunerConstants.FrontRight,
+                  CompTunerConstants.BackLeft,
+                  CompTunerConstants.BackRight,
+                  CompTunerConstants.kCANBus,
+                  CompTunerConstants.kSpeedAt12Volts);
 
-        motor = new Motor(new MotorIOHardware(4, new CANBus(CANPort.CAN_S4)));
+          motor = new Motor(new MotorIOHardware(4, new CANBus(CANPort.CAN_S4)));
 
-        colorSensor = new ColorSensor(new ColorSensorIORev(I2C.Port.PORT_1));
+          colorSensor = new ColorSensor(new ColorSensorIORev(I2C.Port.PORT_1));
 
-        vision =
-            new AprilTagVision(
-                drive::addVisionMeasurement,
-                new CameraIOLimelight4(
-                    "limelight",
-                    drive::getRotation,
-                    "highexpo",
-                    new Pose3d(
-                        Inches.of(12),
-                        Inches.of(2.25),
-                        Inches.of(7),
-                        new Rotation3d(Degrees.zero(), Degrees.of(-40), Degrees.zero()))));
-        break;
-      case SIMBOT:
-        drive =
-            new Drive(
-                new GyroIO() {},
-                ModuleIOReplay::new,
-                CompTunerConstants.FrontLeft,
-                CompTunerConstants.FrontRight,
-                CompTunerConstants.BackLeft,
-                CompTunerConstants.BackRight,
-                CompTunerConstants.kCANBus,
-                CompTunerConstants.kSpeedAt12Volts);
-        break;
+          vision =
+              new AprilTagVision(
+                  drive::addVisionMeasurement,
+                  new CameraIOLimelight4(
+                      "limelight",
+                      drive::getRotation,
+                      "highexpo",
+                      new Pose3d(
+                          Inches.of(12),
+                          Inches.of(2.25),
+                          Inches.of(7),
+                          new Rotation3d(Degrees.zero(), Degrees.of(-40), Degrees.zero()))));
+          break;
+        case SIMBOT:
+          drive =
+              new Drive(
+                  new GyroIO() {},
+                  ModuleIOReplay::new,
+                  CompTunerConstants.FrontLeft,
+                  CompTunerConstants.FrontRight,
+                  CompTunerConstants.BackLeft,
+                  CompTunerConstants.BackRight,
+                  CompTunerConstants.kCANBus,
+                  CompTunerConstants.kSpeedAt12Volts);
+          break;
+      }
     }
 
     if (drive == null) {
